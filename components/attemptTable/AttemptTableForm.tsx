@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { z } from "zod";
 
 import { useState, useTransition } from "react";
@@ -7,7 +8,7 @@ import { toast } from "sonner";
 import { useValidatedForm } from "@/lib/hooks/useValidatedForm";
 
 import { type Action, cn } from "@/lib/utils";
-import { type TAddOptimistic } from "@/app/(app)/attempt-table/useOptimisticAttemptTables";
+import { type TAddOptimistic } from "@/app/(app)/attempt-table/useOptimisticAttemptTable";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -56,12 +57,14 @@ const AttemptTableForm = ({
   ) => {
     const failed = Boolean(data?.error);
     if (failed) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       openModal && openModal(data?.values);
       toast.error(`Failed to ${action}`, {
         description: data?.error ?? "Error",
       });
     } else {
       router.refresh();
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       postSuccess && postSuccess();
       toast.success(`AttemptTable ${action}d!`);
       if (action === "delete") router.push(backpath);
@@ -78,6 +81,7 @@ const AttemptTableForm = ({
       return;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     closeModal && closeModal();
     const values = attemptTableParsed.data;
     const pendingAttemptTable: AttemptTable = {
@@ -199,7 +203,7 @@ const SaveButton = ({
   editing,
   errors,
 }: {
-  editing: Boolean;
+  editing: boolean;
   errors: boolean;
 }) => {
   const { pending } = useFormStatus();

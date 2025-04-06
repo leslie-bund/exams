@@ -76,7 +76,7 @@ export default function LeaderboardPage() {
 
   return (
     <div>
-      <div className="px-6 pt-6">
+      <div className="px-4 pt-4">
         <h1 className="text-2xl font-bold">Leaderboard</h1>
         <p className="mt-2 text-muted-foreground">View the top performers</p>
       </div>

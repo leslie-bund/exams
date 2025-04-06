@@ -120,3 +120,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+.bg-grad {
+  background-image: linear-gradient(
+    to bottom,
+    var(--color-slate-800) 50%,
+    transparent 50%
+  );
+}

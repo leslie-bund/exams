@@ -9,8 +9,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Leslie Hub",
-  description: "Leslie Hub Dashboard",
+  title: "Access Exam Hub",
+  description: "Exam Hub Dashboard",
 };
 
 export default function RootLayout({

@@ -32,8 +32,6 @@ interface NavItem {
   icon: React.ComponentType<{ className?: string }>;
   isActive?: boolean;
 }
-export const SIDEBAR_WIDTH = 44;
-export const SIDEBAR_MOBILE_WIDTH = 24;
 export function SidebarNav({
   user,
 }: {
@@ -96,8 +94,8 @@ export function SidebarNav({
                 isActive={item.isActive}
                 className={
                   item.isActive
-                    ? "bg-slate-700 text-slate-600 dark:bg-white dark:text-slate-950  hover:text-[#0f172a]"
-                    : "hover:bg-slate-800 dark:hover:bg-slate-400"
+                    ? "bg-slate-800 text-slate-500 dark:bg-white dark:text-slate-950  hover:text-[#0f172a]"
+                    : "hover:bg-slate-200 hover:text-slate-600 dark:hover:bg-slate-800 dark:hover:text-slate-100"
                 }
               >
                 <Link href={item.href} className="flex items-center gap-3">

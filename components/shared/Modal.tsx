@@ -20,7 +20,7 @@ export default function Modal({
     <Dialog onOpenChange={setOpen} open={open}>
       <DialogContent>
         <DialogHeader className="px-5 pt-5">
-          <DialogTitle>{title ?? "Modal"}</DialogTitle>
+          <DialogTitle className="text-center" >{title ?? ""}</DialogTitle>
         </DialogHeader>
         <div className="px-5 pb-5">{children}</div>
       </DialogContent>

@@ -3,7 +3,7 @@ import { NewQuizSection } from "@/components/NewQuizSection";
 import { ResumeQuiz } from "@/components/ResumeQuiz";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
+// import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 // import { getUserAuth } from "@/lib/auth/utils";
 
 export default async function Home() {
@@ -136,11 +136,7 @@ export default async function Home() {
                     key={user.id}
                     className="flex items-center p-4 bg-white dark:bg-gray-950 rounded-lg border border-gray-100 dark:border-gray-800 shadow-sm"
                   >
-                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-sm font-medium mr-4">
-                      {index + 1}
-                    </div>
-
-                    {index < 3 && (
+                    {index < 3 ? (
                       <div className="mr-2">
                         {index === 0 && (
                           <span className="text-yellow-500 text-xl">🏆</span>
@@ -152,9 +148,13 @@ export default async function Home() {
                           <span className="text-amber-700 text-xl">🏆</span>
                         )}
                       </div>
+                    ) : (
+                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-sm font-medium mr-4">
+                        {index + 1}
+                      </div>
                     )}
 
-                    <div className="relative">
+                    {/* <div className="relative">
                       <Avatar className="h-10 w-10 border-2 border-white dark:border-gray-800 shadow-sm">
                         <AvatarImage src={user.avatarUrl} alt={user.name} />
                         <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
@@ -162,7 +162,7 @@ export default async function Home() {
                       <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center rounded-full bg-blue-500 text-white text-xs">
                         {user.level}
                       </Badge>
-                    </div>
+                    </div> */}
 
                     <span className="ml-3 font-medium">{user.name}</span>
 
