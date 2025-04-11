@@ -1,5 +1,5 @@
 import { db } from "@/lib/db/index";
-import { eq, and } from "drizzle-orm";
+import { eq, and, desc } from "drizzle-orm";
 import { getUserAuth } from "@/lib/auth/utils";
 import {
   type AttemptTableId,
@@ -15,6 +15,18 @@ export const getAttemptTables = async () => {
     .where(eq(attemptTable.userId, session?.user.id ?? ""));
   const a = rows;
   return { attemptTable: a };
+};
+
+export const getLastAttemptTables = async () => {
+  const { session } = await getUserAuth();
+  const rows = await db
+    .select()
+    .from(attemptTable)
+    .where(eq(attemptTable.userId, session?.user.id ?? ""))
+    .orderBy(desc(attemptTable.createdAt))
+    .limit(1);
+  const a = rows;
+  return { attemptTable: a[0] };
 };
 
 export const getAttemptTableById = async (id: AttemptTableId) => {

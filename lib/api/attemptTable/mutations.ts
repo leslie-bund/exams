@@ -1,21 +1,29 @@
 import { db } from "@/lib/db/index";
 import { and, eq } from "drizzle-orm";
-import { 
-  AttemptTableId, 
+import {
+  AttemptTableId,
   NewAttemptTableParams,
-  UpdateAttemptTableParams, 
+  UpdateAttemptTableParams,
   updateAttemptTableSchema,
-  insertAttemptTableSchema, 
-  attemptTable,
-  attemptTableIdSchema 
+  insertAttemptTableSchema,
+  attemptTable as attemptTableSchema,
+  attemptTableIdSchema,
 } from "@/lib/db/schema/attemptTable";
 import { getUserAuth } from "@/lib/auth/utils";
 
-export const createAttemptTable = async (attemptTable: NewAttemptTableParams) => {
+export const createAttemptTable = async (
+  attemptTable: NewAttemptTableParams
+) => {
   const { session } = await getUserAuth();
-  const newAttemptTable = insertAttemptTableSchema.parse({ ...attemptTable, userId: session?.user.id! });
+  const newAttemptTable = insertAttemptTableSchema.parse({
+    ...attemptTable,
+    userId: session?.user.id,
+  });
   try {
-    const [a] =  await db.insert(attemptTable).values(newAttemptTable).returning();
+    const [a] = await db
+      .insert(attemptTableSchema)
+      .values(newAttemptTable)
+      .returning();
     return { attemptTable: a };
   } catch (err) {
     const message = (err as Error).message ?? "Error, please try again";
@@ -24,17 +32,33 @@ export const createAttemptTable = async (attemptTable: NewAttemptTableParams) =>
   }
 };
 
-export const updateAttemptTable = async (id: AttemptTableId, attemptTable: UpdateAttemptTableParams) => {
+export const updateAttemptTable = async (
+  id: AttemptTableId,
+  attemptTable: UpdateAttemptTableParams
+) => {
   const { session } = await getUserAuth();
   const { id: attemptTableId } = attemptTableIdSchema.parse({ id });
-  const newAttemptTable = updateAttemptTableSchema.parse({ ...attemptTable, userId: session?.user.id! });
+  const newAttemptTable = updateAttemptTableSchema.parse({
+    ...attemptTable,
+    userId: session?.user.id ?? "",
+  });
   try {
-    const [a] =  await db
-     .update(attemptTable)
-     .set({...newAttemptTable, updatedAt: new Date().toISOString().slice(0, 19).replace("T", " ") })
-     .where(and(eq(attemptTable.id, attemptTableId!), eq(attemptTable.userId, session?.user.id!)))
-     .returning();
-    return { attemptTable: a };
+    if (session?.user.id !== undefined && attemptTableId !== undefined) {
+      const [a] = await db
+        .update(attemptTableSchema)
+        .set({
+          ...newAttemptTable,
+          updatedAt: new Date().toISOString().slice(0, 19).replace("T", " "),
+        })
+        .where(
+          and(
+            eq(attemptTableSchema.id, attemptTableId!),
+            eq(attemptTableSchema.userId, session?.user.id)
+          )
+        )
+        .returning();
+      return { attemptTable: a };
+    }
   } catch (err) {
     const message = (err as Error).message ?? "Error, please try again";
     console.error(message);
@@ -45,14 +69,22 @@ export const updateAttemptTable = async (id: AttemptTableId, attemptTable: Updat
 export const deleteAttemptTable = async (id: AttemptTableId) => {
   const { session } = await getUserAuth();
   const { id: attemptTableId } = attemptTableIdSchema.parse({ id });
-  try {
-    const [a] =  await db.delete(attemptTable).where(and(eq(attemptTable.id, attemptTableId!), eq(attemptTable.userId, session?.user.id!)))
-    .returning();
-    return { attemptTable: a };
-  } catch (err) {
-    const message = (err as Error).message ?? "Error, please try again";
-    console.error(message);
-    throw { error: message };
+  if (session?.user.id !== undefined && attemptTableId !== undefined) {
+    try {
+      const [a] = await db
+        .delete(attemptTableSchema)
+        .where(
+          and(
+            eq(attemptTableSchema.id, attemptTableId!),
+            eq(attemptTableSchema.userId, session?.user.id)
+          )
+        )
+        .returning();
+      return { attemptTable: a };
+    } catch (err) {
+      const message = (err as Error).message ?? "Error, please try again";
+      console.error(message);
+      throw { error: message };
+    }
   }
 };
-

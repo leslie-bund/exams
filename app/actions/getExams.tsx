@@ -22,3 +22,12 @@ export async function getListOfExams() {
   ];
   return quizzes;
 }
+
+export async function getQuizDescription(quizKey: string) {
+  const quizzes = await getListOfExams();
+  const quiz = quizzes.find((quiz) => quiz.quizKey === quizKey);
+  if (!quiz) {
+    return ''
+  }
+  return quiz['description'];
+}

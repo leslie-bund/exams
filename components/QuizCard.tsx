@@ -6,6 +6,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useState } from "react";
 import Exams from "@/config/types";
 import Modal from "@/components/shared/Modal";
+
+import { useRouter } from "next/navigation";
 import { Label } from "./ui/label";
 
 import * as React from "react";
@@ -20,7 +22,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "./ui/input";
-import beginAssessment from "@/app/actions/beginAssessment";
+import { useAttemptStore } from "@/lib/hooks/store";
+// import { beginAssessment } from "@/app/actions/beginAssessment";
 
 interface QuizCardProps {
   title: string;
@@ -47,6 +50,12 @@ export function QuizCard({
   const [timer, setTimer] = useState(5);
   const [timerStarted, startTimer] = useState(false);
 
+  const [numOfQuestions, setNumOfQuestions] = useState(0);
+
+  const { createAttempts } = useAttemptStore();
+
+  const router = useRouter();
+
   React.useEffect(() => {
     if (timerStarted) {
       const interval = setInterval(() => {
@@ -54,13 +63,15 @@ export function QuizCard({
         if (timer === 0) {
           clearInterval(interval);
           startTimer(false);
+          setOpen(false);
           setTimer(5);
+          router.push("/quiz/exam");
         }
       }, 1000);
 
       return () => clearInterval(interval);
     }
-  }, [timerStarted, timer]);
+  }, [timerStarted, timer, router]);
 
   return (
     <>
@@ -126,60 +137,67 @@ export function QuizCard({
             </p>
           </div>
         ) : (
-          <form action={beginAssessment}>
-            <div className=" mx-auto flex flex-col items-center ">
-              <div className="p-1">
-                <Label htmlFor="email" className="text-muted-foreground mb-2">
-                  Select Quiz
-                </Label>
-                <Input
-                  style={{ width: "380px" }}
-                  name="quizType"
-                  id="email"
-                  type="text"
-                  value={quizKey}
-                  readOnly
-                />
-                <br />
-              </div>
-              <div>
-                <Label
-                  htmlFor="password"
-                  className="text-muted-foreground mb-2"
-                >
-                  Select No of Questions
-                </Label>
-                <Select>
-                  <SelectTrigger style={{ width: "380px" }}>
-                    <SelectValue placeholder="Select no of questions" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      {[5, 10, 15, 20, 25, 30].map((ele, ind) => (
-                        <SelectItem key={ind} value={ele + ""}>
-                          {ele}
-                        </SelectItem>
-                      ))}
-                      {/* <SelectItem value="banana">Banana</SelectItem>
+          // <form action={beginAssessment}>
+          <div className=" mx-auto flex flex-col items-center justify-center w-full">
+            <div className="flex-1 p-1">
+              <Label htmlFor="email" className="text-muted-foreground mb-2">
+                Select Quiz
+              </Label>
+              <Input
+                // style={{ width: "380px" }}
+                // name="quizType"
+                className="w-[180px] md:w-[380px]"
+                id="email"
+                type="text"
+                value={quizKey}
+                readOnly
+              />
+              <br />
+            </div>
+            <div className="flex-1 ">
+              <Label htmlFor="password" className="text-muted-foreground mb-2">
+                Select No of Questions
+              </Label>
+              <Select
+                onValueChange={(value) => {
+                  setNumOfQuestions(parseInt(value));
+                }}
+                // name="numOfQuestions"
+              >
+                <SelectTrigger className="w-[180px] md:w-[380px]">
+                  <SelectValue placeholder="Select no of questions" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {[5, 10, 15, 20, 25, 30].map((ele, ind) => (
+                      <SelectItem key={ind} value={ele + ""}>
+                        {ele}
+                      </SelectItem>
+                    ))}
+                    {/* <SelectItem value="banana">Banana</SelectItem>
                   <SelectItem value="blueberry">Blueberry</SelectItem>
                   <SelectItem value="grapes">Grapes</SelectItem>
                   <SelectItem value="pineapple">Pineapple</SelectItem> */}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-                <br />
-              </div>
-              <Button
-                type="submit"
-                onClick={() => {
-                  startTimer(true);
-                }}
-                className="bg-gray-900 cursor-pointer hover:bg-gray-800 text-white dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white"
-              >
-                Begin
-              </Button>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              <br />
             </div>
-          </form>
+            <Button
+              type="button"
+              disabled={numOfQuestions === 0}
+              onClick={() => {
+                createAttempts(quizKey, numOfQuestions);
+                setTimeout(() => {
+                  startTimer(true);
+                }, 1000);
+              }}
+              className="bg-gray-900 cursor-pointer hover:bg-gray-800 text-white dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white"
+            >
+              Begin
+            </Button>
+          </div>
+          // </form>
         )}
       </Modal>
     </>

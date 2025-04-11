@@ -3,7 +3,7 @@ import { text, sqliteTable } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 
-import { type getAttemptTable } from "@/lib/api/attemptTable/queries";
+import { getAttemptTables } from "@/lib/api/attemptTable/queries";
 
 import { nanoid, timestamps } from "@/lib/utils";
 
@@ -47,5 +47,5 @@ export type UpdateAttemptTableParams = z.infer<typeof updateAttemptTableParams>;
 export type AttemptTableId = z.infer<typeof attemptTableIdSchema>["id"];
     
 // this type infers the return from getAttemptTable() - meaning it will include any joins
-export type CompleteAttemptTable = Awaited<ReturnType<typeof getAttemptTable>>["attemptTable"][number];
+export type CompleteAttemptTable = Awaited<ReturnType<typeof getAttemptTables>>["attemptTable"][number];
 

@@ -3,11 +3,16 @@ import { NewQuizSection } from "@/components/NewQuizSection";
 import { ResumeQuiz } from "@/components/ResumeQuiz";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { getLastTwoScores } from "@/lib/api/score/queries";
 // import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 // import { getUserAuth } from "@/lib/auth/utils";
 
 export default async function Home() {
   // const { session } = await getUserAuth();
+
+  const { score } = await getLastTwoScores();
+
+  console.log("score", score);
 
   const users = [
     {
@@ -95,14 +100,21 @@ export default async function Home() {
             <div className="flex flex-col">
               <div className="text-slate-500">Current Score</div>
               <div className="flex items-end justify-between">
-                <div className="text-3xl">89%</div>
+                <div className="text-3xl">{score[0]?.score}%</div>
 
-                <Badge
-                  variant={"outline"}
-                  className="bg-green-200 dark:bg-green-900  border border-green-700 text-green-800"
-                >
-                  -&nbsp;5%
-                </Badge>
+                {score[1]?.score !== undefined && (
+                  <Badge
+                    variant={"outline"}
+                    className={`${
+                      score[1]?.score - score[0]?.score > 0
+                        ? "bg-green-200 dark:bg-green-900 text-green-800"
+                        : "bg-red-200 dark:bg-red-900 text-red-800"
+                    } border border-green-700`}
+                  >
+                    {score[1]?.score - score[0]?.score > 0 ? "+" : "-"}&nbsp;
+                    {Math.abs(score[1]?.score - score[0]?.score)}%
+                  </Badge>
+                )}
               </div>
             </div>
           </CardContent>
@@ -111,7 +123,7 @@ export default async function Home() {
           <CardContent className="p-0">
             <div className="flex flex-col">
               <div className="text-slate-500">Previous Score</div>
-              <div className="text-3xl">89%</div>
+              <div className="text-3xl">{score[1]?.score}%</div>
             </div>
           </CardContent>
         </Card>
