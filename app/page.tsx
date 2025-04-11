@@ -11,7 +11,7 @@ export default function LandingPage() {
       <header className="px-4 lg:px-6 h-14 flex items-center">
         <Link className="flex items-center justify-center" href="#">
           <MountainIcon className="h-6 w-6" />
-          <span className="sr-only">Acme Inc</span>
+          <span className="sr-only">Access Exam Hub</span>
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-6">
           <Link
@@ -37,26 +37,28 @@ export default function LandingPage() {
                 <div className="space-y-2">
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
                     The complete platform <br />
-                    for building the Web
+                    for all enterprise mock exams.
                   </h1>
                   <p className="max-w-[600px] text-neutral-500 md:text-xl dark:text-neutral-400">
-                    Give your team the toolkit to stop configuring and start
-                    innovating. Securely build, deploy, and scale the best web
-                    experiences.
+                    Give yourself the toolkit to stop configuring and start
+                    innovating. Securely build competency, deploy confidence,
+                    and scale your knowledge base with the best web experiences.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
                   <Link
                     className="inline-flex h-10 items-center justify-center rounded-md bg-neutral-900 px-8 text-sm font-medium text-neutral-50 shadow transition-colors hover:bg-neutral-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-neutral-50 dark:text-neutral-900 dark:hover:bg-neutral-50/90 dark:focus-visible:ring-neutral-300"
-                    href="#"
+                    href="/sign-up"
                   >
                     Get Started
                   </Link>
                   <Link
                     className="inline-flex h-10 items-center justify-center rounded-md border border-neutral-200 bg-white px-8 text-sm font-medium shadow-sm transition-colors hover:bg-neutral-100 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-950 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-800 dark:bg-neutral-950 dark:hover:bg-neutral-800 dark:hover:text-neutral-50 dark:focus-visible:ring-neutral-300"
-                    href="#"
+                    href="https://wa.me/2347065862675"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    Contact Sales
+                    Contact Developer
                   </Link>
                 </div>
               </div>
@@ -74,9 +76,8 @@ export default function LandingPage() {
                   Faster iteration. More innovation.
                 </h2>
                 <p className="max-w-[900px] text-neutral-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-neutral-400">
-                  The platform for rapid progress. Let your team focus on
-                  shipping features instead of managing infrastructure with
-                  automated CI/CD.
+                  The platform for rapid progress. Focus on attaining the
+                  required competency to tackle challenges anytime and anywhere.
                 </p>
               </div>
             </div>
@@ -88,8 +89,8 @@ export default function LandingPage() {
                     <div className="grid gap-1">
                       <h3 className="text-xl font-bold">Collaboration</h3>
                       <p className="text-neutral-500 dark:text-neutral-400">
-                        Make collaboration seamless with built-in code review
-                        tools.
+                        Become motivated by the performance of other users in
+                        the system.
                       </p>
                     </div>
                   </li>
@@ -97,7 +98,8 @@ export default function LandingPage() {
                     <div className="grid gap-1">
                       <h3 className="text-xl font-bold">Automation</h3>
                       <p className="text-neutral-500 dark:text-neutral-400">
-                        Automate your workflow with continuous integration.
+                        Automate your learning process by picking up from where
+                        you stopped.
                       </p>
                     </div>
                   </li>
@@ -105,8 +107,8 @@ export default function LandingPage() {
                     <div className="grid gap-1">
                       <h3 className="text-xl font-bold">Scale</h3>
                       <p className="text-neutral-500 dark:text-neutral-400">
-                        Deploy to the cloud with a single click and scale with
-                        ease.
+                        A single platform for other exams and quizzes as
+                        requested.
                       </p>
                     </div>
                   </li>
@@ -148,7 +150,7 @@ export default function LandingPage() {
       </main>
       <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
         <p className="text-xs text-neutral-500 dark:text-neutral-400">
-          © 2024 Acme Inc. All rights reserved.
+          © 2025 Leslie
         </p>
         <nav className="sm:ml-auto flex gap-4 sm:gap-6">
           <Link className="text-xs hover:underline underline-offset-4" href="#">
