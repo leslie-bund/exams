@@ -15,12 +15,12 @@ export const revalidate = 0;
 export default async function AttemptTablePage({
   params,
 }: {
-  params: { attemptTableId: string };
+  params: Promise<{ attemptTableId: string }>;
 }) {
 
   return (
     <main className="overflow-auto">
-      <AttemptTable id={params.attemptTableId} />
+      <AttemptTable id={(await params).attemptTableId} />
     </main>
   );
 }

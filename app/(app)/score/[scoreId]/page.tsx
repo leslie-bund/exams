@@ -15,12 +15,12 @@ export const revalidate = 0;
 export default async function ScorePage({
   params,
 }: {
-  params: { scoreId: string };
+  params: Promise<{ scoreId: string }>;
 }) {
 
   return (
     <main className="overflow-auto">
-      <Score id={params.scoreId} />
+      <Score id={(await params).scoreId} />
     </main>
   );
 }
