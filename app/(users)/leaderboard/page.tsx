@@ -1,78 +1,28 @@
-import { Leaderboard } from "@/components/LeaderBoard";
+import { Leaderboard, LeaderboardUser } from "@/components/LeaderBoard";
+import { getLeaderboardAction } from "@/lib/actions/score";
 
-export default function LeaderboardPage() {
-  const users = [
-    {
-      id: "1",
-      name: "Paul C. Ramos",
-      score: 5075,
-      avatarUrl: "/placeholder.svg?height=40&width=40",
-      level: 8,
-    },
-    {
-      id: "2",
-      name: "Derrick L. Thoman",
-      score: 4985,
-      avatarUrl: "/placeholder.svg?height=40&width=40",
-      level: 7,
-    },
-    {
-      id: "3",
-      name: "Kelsey T. Donovan",
-      score: 4642,
-      avatarUrl: "/placeholder.svg?height=40&width=40",
-      level: 9,
-    },
-    {
-      id: "4",
-      name: "Jack L. Gregory",
-      score: 3874,
-      avatarUrl: "/placeholder.svg?height=40&width=40",
-      level: 6,
-    },
-    {
-      id: "5",
-      name: "Mary R. Mercado",
-      score: 3567,
-      avatarUrl: "/placeholder.svg?height=40&width=40",
-      level: 7,
-    },
-    {
-      id: "6",
-      name: "Theresa N. Maki",
-      score: 3478,
-      avatarUrl: "/placeholder.svg?height=40&width=40",
-      level: 8,
-    },
-    {
-      id: "7",
-      name: "Jack L. Gregory",
-      score: 3387,
-      avatarUrl: "/placeholder.svg?height=40&width=40",
-      level: 5,
-    },
-    {
-      id: "8",
-      name: "James R. Stokes",
-      score: 3257,
-      avatarUrl: "/placeholder.svg?height=40&width=40",
-      level: 7,
-    },
-    {
-      id: "9",
-      name: "David B. Rodriguez",
-      score: 3250,
-      avatarUrl: "/placeholder.svg?height=40&width=40",
-      level: 8,
-    },
-    {
-      id: "10",
-      name: "Annette R. Allen",
-      score: 3212,
-      avatarUrl: "/placeholder.svg?height=40&width=40",
-      level: 9,
-    },
-  ];
+export default async function LeaderboardPage() {
+  const scores = await getLeaderboardAction();
+  const users: LeaderboardUser[] =
+    typeof scores !== "string"
+      ? scores?.map((ele) => ({
+          id: ele.email,
+          name: ele.name as string,
+          score: Number(ele.totalScore),
+          avatarUrl: ele.image as string,
+          level: ele.total,
+        }))
+      : [
+          {
+            id: "1",
+            name: "Paul C. Ramos",
+            score: 5075,
+            avatarUrl: "/placeholder.svg?height=40&width=40",
+            level: 8,
+          },
+        ];
+
+  // console.log("scores", scores);
 
   return (
     <div>

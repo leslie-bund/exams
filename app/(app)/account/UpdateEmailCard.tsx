@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
-import { useFormState, useFormStatus } from "react-dom";
+import { useEffect, useActionState as useFormState } from "react";
+import { useFormStatus } from "react-dom";
 
 import { AccountCard, AccountCardFooter, AccountCardBody } from "./AccountCard";
 import { updateUser } from "@/lib/actions/users";
@@ -44,4 +44,3 @@ const Submit = () => {
   const { pending } = useFormStatus();
   return <Button disabled={pending}>Update Email</Button>;
 };
-

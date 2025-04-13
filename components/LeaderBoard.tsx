@@ -6,12 +6,12 @@ import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 
-interface LeaderboardUser {
-  id: string;
-  name: string;
-  score: number;
-  avatarUrl: string;
-  level: number;
+export interface LeaderboardUser {
+  id?: string;
+  name?: string;
+  score?: number;
+  avatarUrl?: string;
+  level?: number;
 }
 
 interface LeaderboardProps {
@@ -22,7 +22,7 @@ export function Leaderboard({ users }: LeaderboardProps) {
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredUsers = users.filter((user) =>
-    user.name.toLowerCase().includes(searchQuery.toLowerCase())
+    user?.name?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -42,7 +42,7 @@ export function Leaderboard({ users }: LeaderboardProps) {
       <div className="space-y-3">
         {filteredUsers.map((user, index) => (
           <div
-            key={user.id}
+            key={index + JSON.stringify(user)}
             className="flex items-center p-4 bg-white dark:bg-gray-950 rounded-lg border border-gray-100 dark:border-gray-800 shadow-sm"
           >
             {index > 2 ? (
@@ -65,10 +65,19 @@ export function Leaderboard({ users }: LeaderboardProps) {
 
             <div className="relative">
               <Avatar className="h-10 w-10 border-2 border-white dark:border-gray-800 shadow-sm">
-                <AvatarImage src={user.avatarUrl} alt={user.name} />
-                <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                <AvatarImage src={user.avatarUrl ?? ""} alt={user.name ?? ""} />
+                <AvatarFallback>
+                  {user.name
+                    ?.split(" ")
+                    .map((word) => word[0].toUpperCase())
+                    .join("")}
+                </AvatarFallback>
               </Avatar>
-              <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center rounded-full bg-blue-500 text-white text-xs">
+              <Badge
+                className={`absolute -top-1 -right-1 h-5 min-w-5 ${
+                  user.level && user?.level <= 10 ? "p-0" : ""
+                } flex items-center justify-center rounded-full bg-blue-500 text-white text-xs`}
+              >
                 {user.level}
               </Badge>
             </div>

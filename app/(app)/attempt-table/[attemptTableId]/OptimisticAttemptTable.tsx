@@ -20,6 +20,7 @@ export default function OptimisticAttemptTable({
 }) {
   const [open, setOpen] = useState(false);
   const openModal = (_?: AttemptTable) => {
+    if(_) {}
     setOpen(true);
   };
   const closeModal = () => setOpen(false);

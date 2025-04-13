@@ -57,14 +57,12 @@ const AttemptTableForm = ({
   ) => {
     const failed = Boolean(data?.error);
     if (failed) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       openModal && openModal(data?.values);
       toast.error(`Failed to ${action}`, {
         description: data?.error ?? "Error",
       });
     } else {
       router.refresh();
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       postSuccess && postSuccess();
       toast.success(`AttemptTable ${action}d!`);
       if (action === "delete") router.push(backpath);
@@ -81,7 +79,6 @@ const AttemptTableForm = ({
       return;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     closeModal && closeModal();
     const values = attemptTableParsed.data;
     const pendingAttemptTable: AttemptTable = {

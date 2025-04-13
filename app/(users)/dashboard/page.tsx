@@ -1,8 +1,10 @@
 // import SignOutBtn from "@/components/auth/SignOutBtn";
+import { LeaderboardUser } from "@/components/LeaderBoard";
 import { NewQuizSection } from "@/components/NewQuizSection";
 import { ResumeQuiz } from "@/components/ResumeQuiz";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { getLeaderboardAction } from "@/lib/actions/score";
 import { getLastTwoScores } from "@/lib/api/score/queries";
 // import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 // import { getUserAuth } from "@/lib/auth/utils";
@@ -11,81 +13,25 @@ export default async function Home() {
   // const { session } = await getUserAuth();
 
   const { score } = await getLastTwoScores();
-
-  console.log("score", score);
-
-  const users = [
-    {
-      id: "1",
-      name: "Paul C. Ramos",
-      score: 5075,
-      avatarUrl: "/placeholder.svg?height=40&width=40",
-      level: 8,
-    },
-    {
-      id: "2",
-      name: "Derrick L. Thoman",
-      score: 4985,
-      avatarUrl: "/placeholder.svg?height=40&width=40",
-      level: 7,
-    },
-    {
-      id: "3",
-      name: "Kelsey T. Donovan",
-      score: 4642,
-      avatarUrl: "/placeholder.svg?height=40&width=40",
-      level: 9,
-    },
-    {
-      id: "4",
-      name: "Jack L. Gregory",
-      score: 3874,
-      avatarUrl: "/placeholder.svg?height=40&width=40",
-      level: 6,
-    },
-    {
-      id: "5",
-      name: "Mary R. Mercado",
-      score: 3567,
-      avatarUrl: "/placeholder.svg?height=40&width=40",
-      level: 7,
-    },
-    {
-      id: "6",
-      name: "Theresa N. Maki",
-      score: 3478,
-      avatarUrl: "/placeholder.svg?height=40&width=40",
-      level: 8,
-    },
-    {
-      id: "7",
-      name: "Jack L. Gregory",
-      score: 3387,
-      avatarUrl: "/placeholder.svg?height=40&width=40",
-      level: 5,
-    },
-    {
-      id: "8",
-      name: "James R. Stokes",
-      score: 3257,
-      avatarUrl: "/placeholder.svg?height=40&width=40",
-      level: 7,
-    },
-    {
-      id: "9",
-      name: "David B. Rodriguez",
-      score: 3250,
-      avatarUrl: "/placeholder.svg?height=40&width=40",
-      level: 8,
-    },
-    {
-      id: "10",
-      name: "Annette R. Allen",
-      score: 3212,
-      avatarUrl: "/placeholder.svg?height=40&width=40",
-      level: 9,
-    },
-  ];
+  const scores = await getLeaderboardAction();
+  const users: LeaderboardUser[] =
+    typeof scores !== "string"
+      ? scores?.map((ele) => ({
+          id: ele.email,
+          name: ele.name as string,
+          score: Number(ele.totalScore),
+          avatarUrl: ele.image as string,
+          level: ele.total,
+        }))
+      : [
+          {
+            id: "1",
+            name: "Paul C. Ramos",
+            score: 5075,
+            avatarUrl: "/placeholder.svg?height=40&width=40",
+            level: 8,
+          },
+        ];
 
   return (
     <main className="p-4">
@@ -105,13 +51,13 @@ export default async function Home() {
                 {score[1]?.score !== undefined && (
                   <Badge
                     variant={"outline"}
-                    className={`${
-                      score[1]?.score - score[0]?.score > 0
-                        ? "bg-green-200 dark:bg-green-900 text-green-800"
-                        : "bg-red-200 dark:bg-red-900 text-red-800"
-                    } border border-green-700`}
+                    className={`border ${
+                      score[0]?.score - score[1]?.score > 0
+                        ? "bg-green-200 dark:bg-green-900 text-green-800  border-green-700"
+                        : "bg-red-200 dark:bg-red-900 text-red-800  border-red-700"
+                    }`}
                   >
-                    {score[1]?.score - score[0]?.score > 0 ? "+" : "-"}&nbsp;
+                    {score[0]?.score - score[1]?.score > 0 ? "+" : "-"}&nbsp;
                     {Math.abs(score[1]?.score - score[0]?.score)}%
                   </Badge>
                 )}

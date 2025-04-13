@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "6",
-      "when": 1743525033536,
-      "tag": "0000_clever_dreaming_celestial",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "6",
-      "when": 1743526690193,
-      "tag": "0001_keen_lady_bullseye",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "6",
-      "when": 1743530976924,
-      "tag": "0002_abnormal_cammi",
+      "when": 1744493450940,
+      "tag": "0000_past_wraith",
       "breakpoints": true
     }
   ]

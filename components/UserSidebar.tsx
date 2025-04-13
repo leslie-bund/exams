@@ -14,6 +14,7 @@ import {
   LogOut,
   Users,
   RotateCw,
+  User,
 } from "lucide-react";
 import {
   Sidebar,
@@ -62,6 +63,12 @@ export function SidebarNav({
       href: "/leaderboard",
       icon: Users,
       isActive: pathname === "/leaderboard",
+    },
+    {
+      title: "Profile",
+      href: "/profile",
+      icon: User,
+      isActive: pathname === "/profile",
     },
   ];
 

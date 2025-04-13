@@ -9,17 +9,10 @@ import { Button } from "@/components/ui/button";
 import Modal from "@/components/shared/Modal";
 import ScoreForm from "@/components/score/ScoreForm";
 
-
-export default function OptimisticScore({ 
-  score,
-   
-}: { 
-  score: Score; 
-  
-  
-}) {
+export default function OptimisticScore({ score }: { score: Score }) {
   const [open, setOpen] = useState(false);
   const openModal = (_?: Score) => {
+    if(_) {}
     setOpen(true);
   };
   const closeModal = () => setOpen(false);
@@ -32,7 +25,6 @@ export default function OptimisticScore({
       <Modal open={open} setOpen={setOpen}>
         <ScoreForm
           score={optimisticScore}
-          
           closeModal={closeModal}
           openModal={openModal}
           addOptimistic={updateScore}
@@ -47,7 +39,7 @@ export default function OptimisticScore({
       <pre
         className={cn(
           "bg-secondary p-4 rounded-lg break-all text-wrap",
-          optimisticScore.id === "optimistic" ? "animate-pulse" : "",
+          optimisticScore.id === "optimistic" ? "animate-pulse" : ""
         )}
       >
         {JSON.stringify(optimisticScore, null, 2)}

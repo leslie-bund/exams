@@ -1,5 +1,6 @@
 import { db } from "@/lib/db/index";
-import { eq, and, desc } from "drizzle-orm";
+import { eq, and, desc, sum, sql, count } from "drizzle-orm";
+import { user } from "@/lib/db/schema/auth";
 import { getUserAuth } from "@/lib/auth/utils";
 import { type ScoreId, scoreIdSchema, score } from "@/lib/db/schema/score";
 
@@ -37,4 +38,22 @@ export const getLastTwoScores = async () => {
     .limit(2);
   const s = rows;
   return { score: s };
+};
+
+export const getTopTenUsersWithHighestScoreTotal = async () => {
+  const query = db
+    .select({
+      email: user.email,
+      name: user.name,
+      image: user.image,
+      totalScore: sum(score.score).as("totalScore"),
+      total: count(score.score)
+    })
+    .from(user)
+    .innerJoin(score, eq(user.id, score.userId))
+    .limit(10)
+    .orderBy(sql`totalScore DESC`);
+  const rows = await query;
+  // console.log('Rows: ,', rows);
+  return { scores: rows };
 };

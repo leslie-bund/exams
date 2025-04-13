@@ -14,6 +14,7 @@ import {
   insertScoreParams,
   updateScoreParams,
 } from "@/lib/db/schema/score";
+import { getTopTenUsersWithHighestScoreTotal } from "../api/score/queries";
 
 const handleErrors = (e: unknown) => {
   const errMsg = "Error, please try again.";
@@ -42,6 +43,15 @@ export const updateScoreAction = async (input: UpdateScoreParams) => {
     const payload = updateScoreParams.parse(input);
     await updateScore(payload.id, payload);
     revalidateScores();
+  } catch (e) {
+    return handleErrors(e);
+  }
+};
+
+export const getLeaderboardAction = async () => {
+  try {
+    const {scores} = await getTopTenUsersWithHighestScoreTotal();
+    return scores;
   } catch (e) {
     return handleErrors(e);
   }
