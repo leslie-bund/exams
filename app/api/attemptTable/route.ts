@@ -7,10 +7,10 @@ import {
   deleteAttemptTable,
   updateAttemptTable,
 } from "@/lib/api/attemptTable/mutations";
-import { 
+import {
   attemptTableIdSchema,
   insertAttemptTableParams,
-  updateAttemptTableParams 
+  updateAttemptTableParams,
 } from "@/lib/db/schema/attemptTable";
 
 export async function POST(req: Request) {
@@ -30,7 +30,6 @@ export async function POST(req: Request) {
   }
 }
 
-
 export async function PUT(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
@@ -39,9 +38,12 @@ export async function PUT(req: Request) {
     const validatedData = updateAttemptTableParams.parse(await req.json());
     const validatedParams = attemptTableIdSchema.parse({ id });
 
-    const { attemptTable } = await updateAttemptTable(validatedParams.id, validatedData);
+    const attemptTable = await updateAttemptTable(
+      validatedParams.id,
+      validatedData
+    );
 
-    return NextResponse.json(attemptTable, { status: 200 });
+    return NextResponse.json(attemptTable?.attemptTable, { status: 200 });
   } catch (err) {
     if (err instanceof z.ZodError) {
       return NextResponse.json({ error: err.issues }, { status: 400 });
@@ -57,9 +59,9 @@ export async function DELETE(req: Request) {
     const id = searchParams.get("id");
 
     const validatedParams = attemptTableIdSchema.parse({ id });
-    const { attemptTable } = await deleteAttemptTable(validatedParams.id);
+    const attemptTable = await deleteAttemptTable(validatedParams.id);
 
-    return NextResponse.json(attemptTable, { status: 200 });
+    return NextResponse.json(attemptTable?.attemptTable, { status: 200 });
   } catch (err) {
     if (err instanceof z.ZodError) {
       return NextResponse.json({ error: err.issues }, { status: 400 });
