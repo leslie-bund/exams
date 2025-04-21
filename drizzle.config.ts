@@ -3,9 +3,10 @@ import { env } from "@/lib/env.mjs";
 
 export default {
   schema: "./lib/db/schema",
-  dialect: "sqlite",
+  dialect: "turso",
   out: "./lib/db/migrations",
   dbCredentials: {
-    url: env.DATABASE_URL,
+    url: env.TURSO_DATABASE_URL!,
+    authToken: env.TURSO_AUTH_TOKEN,
   }
 } satisfies Config;

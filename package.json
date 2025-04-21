@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "tsx lib/db/migrate.ts",
+    "db:migrate": "drizzle-kit migrate",
     "db:drop": "drizzle-kit drop",
     "db:pull": "drizzle-kit introspect",
     "db:push": "drizzle-kit push",
@@ -16,6 +16,7 @@
     "db:check": "drizzle-kit check"
   },
   "dependencies": {
+    "@libsql/client": "^0.15.4",
     "@lucia-auth/adapter-drizzle": "^1.1.0",
     "@node-rs/argon2": "^2.0.2",
     "@node-rs/bcrypt": "^1.10.7",
